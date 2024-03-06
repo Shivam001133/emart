@@ -1,0 +1,50 @@
+{% extends 'emart/base.html' %}
+{% block body %}
+
+{{context.objects}}
+{% if context %}
+
+<div class="card-group">
+{% for i in context.object_list %}
+{% comment %} <div class="row">
+  <p>
+    <div class="col-md-4 offset-md-2">
+        <img class="card" height="200px" src="{{i.image}}">
+    </div>
+
+    <div class="col-md-3">
+        <h3>Item Name: {{i.title}}</h3>
+        <h3>Item Price: Rs {{i.price}} </h3>
+    </div>
+
+    <div class="col-md-2">
+        <a href="{% url 'product:detail' i.pk %}" class="btn btn-success">desc</a>
+    </div>
+    <p>
+</div> {% endcomment %}
+    <div class="card" style="width: 18rem;">
+        <img src="{{i.image}}" class="card-img-top" height="400px" alt="Image">
+        <div class="card-body">
+            <h5 class="card-title">{{i.title}}</h5>
+            <p class="card-text">Item Price: Rs {{i.price}}</p>
+            <a href="{% url 'product:detail' i.pk %}" class="btn btn-success">desc</a>
+        </div>
+    </div>
+{% endfor %}
+</div>
+{% else %}
+  <p>No results found.</p>
+{% endif %}
+
+  <center>
+    {%if context.has_previous %} {# whether the previous page exists #}
+        <a href="?page={{context.previous_page_number}}"><</a> {# link to the prev page #}
+    {% endif %}
+    <span>{{context.number}}</span> {# the current page number #}
+  
+    {%if context.has_next %} {# whether the next page exists #}
+        <a href="?page={{context.next_page_number}}">></a> {# link to the next page #}
+    {% endif %}
+</center>
+
+{% endblock %}
